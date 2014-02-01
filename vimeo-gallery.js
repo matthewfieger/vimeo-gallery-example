@@ -17,6 +17,7 @@ var videosCallback = 'setupGallery';
 var vimeoUsername = 'brad';
 
 
+// Request Users Videos
 $(document).ready(function() {
         // Load a JSON file from the Vimeo Simple API Server using a GET HTTP request, then execute it.
         // Vimeo wraps the response in a callback function called 'setupGallery'
@@ -25,10 +26,12 @@ $(document).ready(function() {
 });
 
 
+
+// Request oEmbed Code
 function getVideo(url) {
         // Load a JSON file from the Vimeo Simple API Server using a GET HTTP request, then execute it.
         // Vimeo wraps the response in a callback function called 'switchVideo'
-        // console.log("Requested embed code from " + oEmbedEndpoint + '?url=' + url + '&width=504&height=280&callback=' + oEmbedCallback);
+        console.log("Requested embed code from " + oEmbedEndpoint + '?url=' + url + '&width=504&height=280&callback=' + oEmbedCallback);
         $.getScript(oEmbedEndpoint + '?url=' + url + '&width=504&height=280&callback=' + oEmbedCallback);
 }
 
@@ -42,7 +45,7 @@ function setupGallery(videos) {
 
         // Load the first video
         // console.log("Request embed code for " + videos[0].url);
-        // console.log(getVideo(videos[0].url).html);
+        console.log(getVideo(videos[0].url));
         getVideo(videos[0].url);
 
         // Add the videos to the gallery
@@ -64,6 +67,10 @@ function setupGallery(videos) {
 
 
 function switchVideo(video) {
-        $('#embed').html(unescape(video.html));
+        // console.log(video.html.replace("//", "http://"));
+        // If request originates from localhost we need to replace '//'' with 'http://'
+        $('#embed').html(unescape(video.html.replace("//", "http://")));
+        // If request originates from http, http will be included
+        // $('#embed').html(unescape(video.html));
 }
 
