@@ -70,7 +70,7 @@ function setupGallery(videos) {
 
 }
 
-// Load the embed code of the video in the 'embed' section of the DOM
+// Load the embed code of the video into the 'embed' section of the DOM
 function switchVideo(video) {
         video = video.html; // Access the html property of the video object, which is the iframe embed code
         video = video.replace("//", "https://"); // If request originates from localhost we need to replace '//'' with 'https://'
