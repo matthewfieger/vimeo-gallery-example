@@ -67,10 +67,9 @@ function setupGallery(videos) {
 
 
 function switchVideo(video) {
-        // console.log(video.html.replace("//", "http://"));
         // If request originates from localhost we need to replace '//'' with 'http://'
-        $('#embed').html(unescape(video.html.replace("//", "http://")));
-        // If request originates from http, http will be included
-        // $('#embed').html(unescape(video.html));
+        video = video.html.replace("//", "https://");
+        console.log(video);
+        $('#embed').html(unescape(video));
 }
 
