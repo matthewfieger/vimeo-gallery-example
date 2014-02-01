@@ -67,9 +67,10 @@ function setupGallery(videos) {
 
 
 function switchVideo(video) {
-        // If request originates from localhost we need to replace '//'' with 'http://'
-        video = video.html.replace("//", "https://");
-        console.log(video);
-        $('#embed').html(unescape(video));
+        video = video.html; // Access the html property of the video object, which is the iframe embed code
+        video = video.replace("//", "https://"); // If request originates from localhost we need to replace '//'' with 'http://'
+        video = unescape(video); // Remove escape charecters from the string
+        // console.log(video);
+        $('#embed').html(video);
 }
 
