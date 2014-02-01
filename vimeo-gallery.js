@@ -71,6 +71,6 @@ function switchVideo(video) {
         video = video.replace("//", "https://"); // If request originates from localhost we need to replace '//'' with 'http://'
         video = unescape(video); // Remove escape charecters from the string
         // console.log(video);
-        $('#embed').html(video);
+        $('#embed').html(video); // The 'video' string of HTML is set as the content of each matched '#embed' element
 }
 
