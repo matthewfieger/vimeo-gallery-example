@@ -10,53 +10,58 @@
 ************************************
 **************************************************************************/
 
-var apiEndpoint = 'http://vimeo.com/api/v2/';
-var oEmbedEndpoint = 'http://vimeo.com/api/oembed.json'
-var oEmbedCallback = 'switchVideo';
-var videosCallback = 'setupGallery';
-var vimeoUsername = 'brad';
+var apiEndpoint = 'http://vimeo.com/api/v2/'; //Endpoint for the Vimeo Simple API
+var videosCallback = 'setupGallery'; // The name of our callback function
+//
+var oEmbedEndpoint = 'http://vimeo.com/api/oembed.json' //Endpoint for the Vimeo oEmbed API
+var oEmbedCallback = 'switchVideo'; // The name of our callback function
+//
+var vimeoUsername = 'brad'; // The username of the account we want to get videos for
 
 
-// Request Users Videos
+// Request the user's videos, and send it to our callback function
 $(document).ready(function() {
-        // Load a JSON file from the Vimeo Simple API Server using a GET HTTP request, then execute it.
-        // Vimeo wraps the response in a callback function called 'setupGallery'
-        // console.log("Requested videos from " + apiEndpoint + vimeoUsername + '/videos.json?callback=' + videosCallback);
-        $.getScript(apiEndpoint + vimeoUsername + '/videos.json?callback=' + videosCallback);
+        // Load a JSON file from the Vimeo Simple API Server using a GET HTTP request,
+        var url = apiEndpoint + vimeoUsername + '/videos.json?callback=' + videosCallback;
+        // Vimeo kindkly wraps the response in our 'setupGallery' function
+        $.getScript(url);
+        // getScript then executes our callback function, which is 'setupGallery'
 });
 
-
-
-// Request oEmbed Code
+// Request oEmbed code for a video, and send it to our callback function
 function getVideo(url) {
-        // Load a JSON file from the Vimeo Simple API Server using a GET HTTP request, then execute it.
-        // Vimeo wraps the response in a callback function called 'switchVideo'
-        console.log("Requested embed code from " + oEmbedEndpoint + '?url=' + url + '&width=504&height=280&callback=' + oEmbedCallback);
-        $.getScript(oEmbedEndpoint + '?url=' + url + '&width=504&height=280&callback=' + oEmbedCallback);
+        // Load a JSON file from the Vimeo Simple API Server using a GET HTTP request,
+        var url = oEmbedEndpoint + '?url=' + url + '&width=504&height=280&callback=' + oEmbedCallback;
+        // Vimeo kindly wraps the response in our 'switchVideo' function
+        $.getScript(url);
+        // getScript then executes our callback function, which is 'setupGallery'
 }
 
-
+// Set up the gallery, and load the first video
 function setupGallery(videos) {
 
-        // Set the user's thumbnail and the page title
-        // console.log(videos)
-        $('#stats').prepend('<img id="portrait" src="' + videos[0].user_portrait_medium + '" />');
-        $('#stats h2').text(videos[0].user_name + "'s Videos");
+		var firstVideo = videos[0];
+		var firstVideoUrl = firstVideo.url;
+		var username = firstVideo.user_name;
+		var portrait = firstVideo.user_portrait_medium;
 
-        // Load the first video
-        // console.log("Request embed code for " + videos[0].url);
-        console.log(getVideo(videos[0].url));
-        getVideo(videos[0].url);
+        // Set the user's thumbnail and the page title
+        $('#stats').prepend('<img id="portrait" src="' + portrait + '" />');
+        $('#stats h2').text(username + "'s Videos");
+
+        // Call getVideo to load the first video
+        getVideo(firstVideoUrl);
 
         // Add the videos to the gallery
         for (var i = 0; i < videos.length; i++) {
-                // console.log(videos[i]);
-                var html = '<li><a href="' + videos[i].url + '"><img src="' + videos[i].thumbnail_large + '" class="thumb" />';
-                html += '<p>' + videos[i].title + '</p></a></li>';
+        	    // For each video in 'videos', which comes from $(document).ready
+                var video = videos[i];
+                var html = '<li><a href="' + video.url + '"><img src="' + video.thumbnail_medium + '" class="thumb" />';
+                html += '<p>' + video.title + '</p></a></li>';
                 $('#thumbs ul').append(html);
         }
 
-        // Switch to the video when a thumbnail is clicked
+        // Call 'getVideo' again to switch to the video when a thumbnail is clicked
         $('#thumbs a').click(function(event) {
                 event.preventDefault();
                 getVideo(this.href);
@@ -65,12 +70,10 @@ function setupGallery(videos) {
 
 }
 
-
+// Load the embed code of the video in the 'embed' section of the DOM
 function switchVideo(video) {
         video = video.html; // Access the html property of the video object, which is the iframe embed code
-        video = video.replace("//", "https://"); // If request originates from localhost we need to replace '//'' with 'http://'
+        video = video.replace("//", "https://"); // If request originates from localhost we need to replace '//'' with 'https://'
         video = unescape(video); // Remove escape charecters from the string
-        // console.log(video);
         $('#embed').html(video); // The 'video' string of HTML is set as the content of each matched '#embed' element
 }
-
