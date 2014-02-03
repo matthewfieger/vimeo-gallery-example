@@ -89,4 +89,4 @@ function switchVideo(video) {
 =======
         $('#embed').html(video); // The 'video' string of HTML is set as the content of each matched '#embed' element
 }
->>>>>>> df9424636cc213803a184c06122d1e441fecd253
+
