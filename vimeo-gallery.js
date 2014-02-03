@@ -6,6 +6,7 @@
 * The Simple API is a really easy way to get information about public videos, users, groups, channels, albums, and activity.
 *
 * http://developer.vimeo.com/apis/simple
+* https://github.com/vimeo/vimeo-api-examples/blob/master/simple-api/gallery/js-example.html
 ************************************
 ************************************
 **************************************************************************/
@@ -54,7 +55,7 @@ function setupGallery(videos) {
 
         // Add the videos to the gallery
         for (var i = 0; i < videos.length; i++) {
-        	    // For each video in 'videos'
+                // For each video in 'videos'
                 var video = videos[i]; // Access the i'th video from the video object
                 var html = '<li>'; // New list item for each video
                 html += '<a href="' + video.url + '">'; // Add an anchor tag for the video
@@ -66,7 +67,7 @@ function setupGallery(videos) {
 
         // Call 'getVideo' again to switch to the video when a thumbnail is clicked
         $('#thumbs a').click(function(event) {
-        		// On a click event for any #thumbs anchor tag
+                // On a click event for any #thumbs anchor tag
                 event.preventDefault(); // The default action of the event will not be triggered.
                 url = this.href // Using the anchor tag, access the URL of the video via the href attribute
                 getVideo(url); // Call 'getVideo' with the URL of the clicked video
@@ -77,7 +78,7 @@ function setupGallery(videos) {
 
 // Load the embed code of the video into the 'embed' section of the DOM
 function switchVideo(video) {
-		// The argument to this function will be the video object returned from our 'getVideo' request
+        // The argument to this function will be the video object returned from our 'getVideo' request
         video = video.html; // Access the iframe embed code via the html property of the returned video object
         video = video.replace("//", "https://"); // If request originates from localhost we need to replace '//'' with 'https://'
         video = unescape(video); // Remove escape charecters from the string
