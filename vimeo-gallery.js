@@ -39,12 +39,12 @@ function getVideo(url) {
 
 // Set-up the gallery, and load the first video
 function setupGallery(videos) {
-                // The argument to this function will be the videos object returned from our $().ready request
+        // The argument to this function will be the videos object returned from our $().ready request
 
-                var firstVideo = videos[0]; // Access the first video
-                var firstVideoUrl = firstVideo.url; // Access the URL property of the first video
-                var username = firstVideo.user_name; // Access the username property via the first video
-                var portrait_url = firstVideo.user_portrait_medium; // Access a link to the user's thumbnail portrait
+        var firstVideo = videos[0]; // Access the first video
+        var firstVideoUrl = firstVideo.url; // Access the URL property of the first video
+        var username = firstVideo.user_name; // Access the username property via the first video
+        var portrait_url = firstVideo.user_portrait_medium; // Access a link to the user's thumbnail portrait
 
         // Set the user's thumbnail and the page title
         $('#stats').prepend('<img id="portrait" src="' + portrait_url + '" />'); // Prepend <img> to #stats section
