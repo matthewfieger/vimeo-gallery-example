@@ -82,11 +82,6 @@ function switchVideo(video) {
         video = video.html; // Access the iframe embed code via the html property of the returned video object
         video = video.replace("//", "https://"); // If request originates from localhost we need to replace '//'' with 'https://'
         video = unescape(video); // Remove escape charecters from the string
-<<<<<<< HEAD
         $('#embed').html(video); // The 'video' string of HTML is set as the content of the '#embed' element
-}
-
-=======
-        $('#embed').html(video); // The 'video' string of HTML is set as the content of each matched '#embed' element
 }
 
